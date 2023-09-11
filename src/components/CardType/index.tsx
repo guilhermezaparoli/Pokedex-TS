@@ -20,10 +20,12 @@ import {ReactComponent as IconTypeSteel} from "../../assets/pokemonTypes/steel.s
 import {ReactComponent as IconTypeWater} from "../../assets/pokemonTypes/water.svg"
 interface CardTypeProps {
   value: keyof typeof STATUS_COLORS;
+  isSelected: boolean
+  onClick: () => void
 }
 
 
-export function CardType({ value}: CardTypeProps) {
+export function CardType({ value, onClick, isSelected}: CardTypeProps) {
   let TypeSvgComponent: FC<React.SVGProps<SVGSVGElement>> | undefined;
 
   
@@ -86,7 +88,7 @@ export function CardType({ value}: CardTypeProps) {
 
 
   return (
-    <StyledContainer statusColor={value} >
+    <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} >
       {TypeSvgComponent && <TypeSvgComponent/>}
       <p>{value}</p>
     </StyledContainer>
