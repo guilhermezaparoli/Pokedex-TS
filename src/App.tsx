@@ -3,6 +3,7 @@ import { Header } from "./components/Layout/Header"
 import { Search } from "./components/Search"
 import { ThemeProvider } from "styled-components"
 import { defaultTheme } from "./styles/themes/default"
+import { Body } from "./components/Layout/Body"
 
 
 export function App() {
@@ -13,6 +14,7 @@ export function App() {
       <GlobalStyle/>
       <Header/>
       <Search/>
+      <Body/>
     </ThemeProvider>
     </>
   )
