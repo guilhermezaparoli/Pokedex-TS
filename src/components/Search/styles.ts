@@ -10,6 +10,8 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 
+
+
 `
 
 export const TypeSearch = styled.div`
@@ -24,17 +26,28 @@ gap: 1rem;
   font-weight: 700;
   line-height: 1.35;
 }
+
+@media (max-width: 768px) {
+  max-width: 100%;
+padding: 1rem 2rem;
+}
+
 `
 
 export const Types = styled.div`
 max-width: 60rem;
-overflow: auto;
 display: flex;
 flex-wrap: wrap;
 justify-content: center;
 
 gap: 18px;
 align-items: center;
+
+
+@media (max-width: 768px) {
+flex-wrap: nowrap;
+overflow: auto;
+}
 `
 
 export const InputSearchContainer = styled.div`
@@ -66,6 +79,7 @@ outline: none;
   line-height: 1.5rem;
   color: ${props => props.theme["place-holder-color"]};
 }
+
 `
 
 export const ButtonSearch = styled.button`
@@ -84,7 +98,7 @@ svg {
 `
 export const ContainerDivider =styled.div`
 max-width: 76rem;
-margin: 2.5rem auto 10rem ;
+margin: 4.5rem auto 12rem ;
 
 display: flex;
 align-items: center;

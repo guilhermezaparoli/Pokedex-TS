@@ -19,6 +19,7 @@ psychic: 'type-psychic',
 rock: 'type-rock',
 ground: 'type-ground',
 steel: 'type-steel',
+all: 'type-all'
 } as const
 
 export interface StatusProps {
@@ -27,8 +28,7 @@ export interface StatusProps {
 }
 
 export const StyledContainer = styled.button<StatusProps>`
-/* background-color: ${props => props.isSelected ? props.theme[STATUS_COLORS[props.statusColor]]  : `#060F39`}; */
-background-color: ${props => props.theme[STATUS_COLORS[props.statusColor]]};
+background-color: ${props => props.isSelected ? props.theme[STATUS_COLORS[props.statusColor]]  : `#060F39`};
 
 display: flex;
 align-items: center;
@@ -36,7 +36,7 @@ gap: 8px;
 
 padding: 4px 8px;
 border-radius: 8px;
-/* border: 1px solid transparent; */
+border: 1px solid transparent;
 transition: 0.3s;
 
 p {
@@ -47,13 +47,14 @@ p {
   text-transform: capitalize;
 }
 
-/* svg path {
-  fill: ${props => props.isSelected ? props.theme.white : props.theme[STATUS_COLORS[props.statusColor]]} !important;
-} */
+svg path {
+transition: 0.3s;
+  fill: ${props => props.isSelected ? props.theme.white : props.theme[STATUS_COLORS[props.statusColor]]};
+}
 
-/* &:hover {
+&:hover {
   border: 1px solid  ${props => props.theme[STATUS_COLORS[props.statusColor]]}
 
-} */
+}
 
 `

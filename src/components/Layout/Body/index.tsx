@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { CardPokemon } from "../../CardPokemon";
 import { ContainerCards, StyledContainerBody } from "./styles";
-import { getAllPokemons } from "../../../api/api";
+import { StatsInterface, getAllPokemons } from "../../../api/api";
 
 export interface PokemonType {
   type: {
@@ -17,6 +17,7 @@ export interface Pokemon {
   height: number;
   weight: number;
   types: PokemonType[];
+  stats: StatsInterface[]
 }
 
 
@@ -37,13 +38,11 @@ export function Body() {
   }, []);
 
   
-
-  console.log(pokemons);
   return (
     <StyledContainerBody>
       <ContainerCards>
         {pokemons.map((pokemon) => (
-          <CardPokemon pokemonData={pokemon} />
+          <CardPokemon pokemonData={pokemon}/>
         ))}
       </ContainerCards>
     </StyledContainerBody>

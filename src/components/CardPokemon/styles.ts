@@ -1,3 +1,4 @@
+import Popup from "reactjs-popup";
 import { keyframes, styled } from "styled-components";
 
 export const STATUS_COLORS = {
@@ -25,6 +26,7 @@ export interface StatusProps {
   statusColor: keyof typeof STATUS_COLORS;
 }
 
+
 const fadeDown = keyframes`
   from {
     opacity: 0;
@@ -35,15 +37,24 @@ const fadeDown = keyframes`
     transform: initial;
   }
   `;
-export const StyledMainContainer = styled.div`
+interface StyledMainContainerProps {
+  modal?: boolean
+}
+
+export const StyledMainContainer = styled.div<StyledMainContainerProps>`
   width: 24rem;
   max-height: 23.5rem;
   animation: ${fadeDown} 0.8s;
   position: relative;
+
+
+@media (max-width: 768px) {
+  width: 20rem;
+}
 `;
 
-export const Card = styled.div`
-  border: 1px solid ${(props) => props.theme["pokemnon-card-border"]};
+export const Card = styled.div<StyledMainContainerProps>`
+  border: 1px solid ${({theme, modal}) => modal ? "transparent" : theme["pokemon-card-border"]};
 
   display: flex;
   flex-direction: column;
@@ -52,15 +63,16 @@ export const Card = styled.div`
   overflow: hidden;
   border-radius: 24px;
   position: relative;
+  
 
   padding-top: 7rem;
 
-  &::after {
+  ${props => !props.modal && `&::after {
     content: "";
     display: block;
     width: 12.5rem;
     height: 12.5rem;
-    background: ${(props) => props.theme[STATUS_COLORS[props.color]]};
+    background: ${props.theme[STATUS_COLORS[props.color]]};
     filter: blur(128px);
     position: absolute;
     top: 0;
@@ -68,7 +80,8 @@ export const Card = styled.div`
     transform: translateX(-50%);
     transition: 0.8s;
     z-index: -2;
-  }
+  }`}
+
 `;
 export const PokemonImage = styled.img`
   max-width: 16rem;
@@ -79,6 +92,8 @@ export const PokemonImage = styled.img`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+
+
 `;
 export const PokemonId = styled.p`
   color: ${(props) => props.theme.white};
@@ -174,3 +189,26 @@ export const MoreDetails = styled.button`
     filter: brightness(0.7);
   }
 `;
+export const Dialog = styled.div`
+width: 100%;
+margin: 14rem 0 7rem;
+
+/* overflow: auto; */
+`
+
+export const StyledPopup = styled(Popup)`
+
+
+
+&-overlay {
+background: rgba(0, 0, 0, 0.50);
+
+}
+
+@media (max-width: 768px) {
+  &-overlay  {
+    overflow: auto;
+  } 
+
+}
+`

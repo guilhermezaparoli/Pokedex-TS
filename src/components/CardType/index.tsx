@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { CSSProperties, FC } from "react";
 import { STATUS_COLORS, StyledContainer } from "./styles";
 import {ReactComponent as IconTypeBug} from "../../assets/pokemonTypes/bug.svg"
 import {ReactComponent as IconTypeDark} from "../../assets/pokemonTypes/dark.svg"
@@ -19,13 +19,14 @@ import {ReactComponent as IconTypeRock} from "../../assets/pokemonTypes/rock.svg
 import {ReactComponent as IconTypeSteel} from "../../assets/pokemonTypes/steel.svg"
 import {ReactComponent as IconTypeWater} from "../../assets/pokemonTypes/water.svg"
 interface CardTypeProps {
-  value: keyof typeof STATUS_COLORS;
+  value: keyof typeof STATUS_COLORS | string;
   isSelected: boolean
   onClick: () => void
+  style?: CSSProperties
 }
 
 
-export function CardType({ value, onClick, isSelected}: CardTypeProps) {
+export function CardType({ value, onClick, isSelected, style}: CardTypeProps) {
   let TypeSvgComponent: FC<React.SVGProps<SVGSVGElement>> | undefined;
 
   
@@ -88,7 +89,7 @@ export function CardType({ value, onClick, isSelected}: CardTypeProps) {
 
 
   return (
-    <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} >
+    <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} style={style} >
       {TypeSvgComponent && <TypeSvgComponent/>}
       <p>{value}</p>
     </StyledContainer>

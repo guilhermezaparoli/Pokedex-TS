@@ -18,11 +18,13 @@ export const defaultTheme = {
   'type-psychic': '#ff6c64',
   'type-rock': '#d8bc5a',
   'type-steel': '#23a1bd',
+  'type-all': 'black',
   
 
 
 
   "input-color": "#2F5AFF",
   "place-holder-color": "rgba(255, 255, 255, 0.25)",
-  "pokemnon-card-border": "#24293F",
+  "pokemon-card-border": "#24293F",
+  "container-modal": '#555',
 };

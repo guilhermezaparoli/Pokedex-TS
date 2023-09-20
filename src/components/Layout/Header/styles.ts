@@ -20,17 +20,31 @@ max-width: 76rem;
 width: 100%;
 margin: 0 auto;
 
+
+@media (max-width: 768px) {
+  padding-top: 0.5rem;
+}
 `
 export const HeaderContent = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
 
+
+@media (max-width: 768px) {
+  padding: 0 0.5rem;
+}
+
 `
 
 export const Medias = styled.div`
 display: flex;
 gap: 1.5rem;
+
+
+> img {
+  cursor: pointer;
+}
 `
 
 export const ContainerHero = styled.div`
@@ -70,6 +84,12 @@ margin-top: 4.5rem;
 export const Heroes = styled.div`
 display: flex;
 justify-content: center;
+
+@media (max-width: 768px) {
+  display: grid;
+
+  grid-template-areas: "a a a" "b c c";
+}
 `
 
 export const ImgBigHero = styled.img`
@@ -102,6 +122,10 @@ animation: diagonalAnimation 2s;
   
 }
 
+
+@media (max-width: 768px) {
+  max-height: 175px;
+}
 `
 
 export const ImgHero = styled.img`
@@ -111,6 +135,10 @@ max-width: 100%;
 
 transition: 0.3s;
 z-index: 2;
+
+@media (max-width: 768px) {
+  max-height: 100px;
+}
 `
 
 export const ImgSmallHero = styled.img`
@@ -141,6 +169,10 @@ animation: scaleAnimation 2s;
   
 }
 
+
+@media (max-width: 768px) {
+  max-height: 100px;
+}
 `
 
 export const Waves =styled.div`
