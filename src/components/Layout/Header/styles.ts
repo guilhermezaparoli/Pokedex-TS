@@ -85,18 +85,23 @@ export const Heroes = styled.div`
 display: flex;
 justify-content: center;
 
+> div {
+  display: flex;
+  justify-content: center;
+}
 @media (max-width: 768px) {
-  display: grid;
-
-  grid-template-areas: "a a a" "b c c";
+  flex-direction: column-reverse;
 }
 `
 
 export const ImgBigHero = styled.img`
+
 max-width: 488px;
 max-height: 528px;
-transition: 0.3s;
+transition: transform 0.3s;
 z-index: 2;
+
+
 
 
 &:hover {
@@ -124,7 +129,10 @@ animation: diagonalAnimation 2s;
 
 
 @media (max-width: 768px) {
-  max-height: 175px;
+  max-height: 250px;
+  max-width: 250px;
+
+  place-self: center;
 }
 `
 
@@ -137,7 +145,7 @@ transition: 0.3s;
 z-index: 2;
 
 @media (max-width: 768px) {
-  max-height: 100px;
+  max-height: 200px;
 }
 `
 
@@ -171,7 +179,7 @@ animation: scaleAnimation 2s;
 
 
 @media (max-width: 768px) {
-  max-height: 100px;
+  max-height: 175px;
 }
 `
 
@@ -223,5 +231,6 @@ margin-bottom: 8rem;
     height: 2.5rem;
     min-height: 2.5rem;
   }
+margin-bottom: 4rem;
 }
 `

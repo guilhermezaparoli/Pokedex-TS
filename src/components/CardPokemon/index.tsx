@@ -99,6 +99,7 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
             }
             modal
             nested
+            lockScroll      
           >
             {(close) => (
               <Dialog >

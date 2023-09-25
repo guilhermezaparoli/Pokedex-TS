@@ -2,12 +2,11 @@ import axios from "axios";
 import { Pokemon } from "../components/Layout/Body";
 import { PokemonType } from "../components/Layout/Body";
 
-
-export interface StatsInterface { 
-  base_stat: number,
+export interface StatsInterface {
+  base_stat: number;
   stat: {
-    name: string
-  }
+    name: string;
+  };
 }
 interface Request {
   id: number;
@@ -18,9 +17,8 @@ interface Request {
 }
 
 export const api = axios.create({
-  baseURL:'https://pokeapi.co/api/v2/'
-})
-
+  baseURL: "https://pokeapi.co/api/v2/",
+});
 
 export async function getAllPokemons() {
   const response = await api.get("/pokemon?offset=0&limit=9");
@@ -28,30 +26,30 @@ export async function getAllPokemons() {
 
   const payloadPokemons = await Promise.all(
     results.map(async (pokemon: Pokemon) => {
-      const { id, types, height, weight, stats } = await getMoreInfo(pokemon.url);
+      const { id, types, height, weight, stats } = await getMoreInfo(
+        pokemon.url
+      );
 
-
-      for(const name of stats) {
-        console.log(name)
-        switch(name.stat.name) {
-          case 'hp': 
-          name.stat.name = "HP"
-          break
-          case 'attack': 
-          name.stat.name = "Attack"
-          break
-          case 'defense': 
-          name.stat.name = "Defense"
-          break
-          case 'special-attack': 
-          name.stat.name = "Sp. Atk"
-          break
-          case 'special-defense': 
-          name.stat.name = "Sp. Def"
-          break
-          case 'speed': 
-          name.stat.name = "Speed"
-          break
+      for (const name of stats) {
+        switch (name.stat.name) {
+          case "hp":
+            name.stat.name = "HP";
+            break;
+          case "attack":
+            name.stat.name = "Attack";
+            break;
+          case "defense":
+            name.stat.name = "Defense";
+            break;
+          case "special-attack":
+            name.stat.name = "Sp. Atk";
+            break;
+          case "special-defense":
+            name.stat.name = "Sp. Def";
+            break;
+          case "speed":
+            name.stat.name = "Speed";
+            break;
         }
       }
 
@@ -73,5 +71,102 @@ async function getMoreInfo(url: string): Promise<Request> {
   const { id, types, height, weight, stats } = response.data;
 
   return { id, types, height, weight, stats };
+}
+
+// interface fetchPokemonByTypeProps {
+//   type: 'fire' | 'flying' | 'bug' | 'dark' | 'dragon' | 'electric' | 'grass' | 'poison'| 'water' | 'fairy' |'fighting' |'ghost' |'ground'| 'ice' | 'normal'|'psychic'| 'rock' | 'steel'
+// }
+
+export async function fetchPokemonByType(typeName: string) {
+  const response = await api.get(`/type/${typeName}?offset=0&limit=9`);
+  const { pokemon } = response.data;
+
+  console.log(pokemon);
+
+  const payloadPokemonType = await Promise.all(
+    pokemon.map(async (pokemonType: Pokemon) => {
+      console.log(pokemonType.pokemon.url);
+      const { id, types, height, weight, stats } = await getMoreInfo(
+        pokemonType.pokemon.url
+      );
+      console.log(pokemonType);
+      for (const name of stats) {
+        switch (name.stat.name) {
+          case "hp":
+            name.stat.name = "HP";
+            break;
+          case "attack":
+            name.stat.name = "Attack";
+            break;
+          case "defense":
+            name.stat.name = "Defense";
+            break;
+          case "special-attack":
+            name.stat.name = "Sp. Atk";
+            break;
+          case "special-defense":
+            name.stat.name = "Sp. Def";
+            break;
+          case "speed":
+            name.stat.name = "Speed";
+            break;
+        }
+      }
+
+      return {
+        name: pokemonType.pokemon.name,
+        id,
+        types,
+        height,
+        weight,
+        stats,
+      };
+    })
+  );
+  return payloadPokemonType;
+}
+
+export async function fetchPokemonBySearch(pokemonName: string) {
+  console.log(pokemonName, "searchhh");
+  const response = await api.get(`/pokemon/ditto`);
+
+
+  console.log(response.data, "searchhh resp");
+
+
+  const { id, types, height, weight, stats } = response.data
+
+
+  for (const name of stats) {
+    switch (name.stat.name) {
+      case "hp":
+        name.stat.name = "HP";
+        break;
+      case "attack":
+        name.stat.name = "Attack";
+        break;
+      case "defense":
+        name.stat.name = "Defense";
+        break;
+      case "special-attack":
+        name.stat.name = "Sp. Atk";
+        break;
+      case "special-defense":
+        name.stat.name = "Sp. Def";
+        break;
+      case "speed":
+        name.stat.name = "Speed";
+        break;
+    }
+  }
+  const payloadPokemonSearch = {
+    name: response.data.name,
+    id,
+    types,
+    height,
+    weight,
+    stats,
+  };
+  console.log(payloadPokemonSearch, 'searchhh')
 
 }

@@ -88,6 +88,7 @@ export function CardType({ value, onClick, isSelected, style}: CardTypeProps) {
 }
 
 
+
   return (
     <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} style={style} >
       {TypeSvgComponent && <TypeSvgComponent/>}

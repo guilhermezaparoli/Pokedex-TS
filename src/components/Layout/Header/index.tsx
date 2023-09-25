@@ -38,6 +38,8 @@ export function Header() {
 
       <ContainerHero>
         <Heroes>
+          <div>
+
           <ImgSmallHero src={ImgIvysaur} alt="imagem do pokémon Ivysaur" />
 
           <ImgHero
@@ -45,6 +47,8 @@ export function Header() {
             src={ImgPokemonTrainer}
             alt="imagem do treinador do pokemon"
           />
+          </div>
+
           <ImgBigHero src={ImgCharizar} alt="imagem do pokémon charizard" />
         </Heroes>
 
