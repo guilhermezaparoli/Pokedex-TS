@@ -124,11 +124,24 @@ export function Body() {
 
   const [searchByUser, setSearchByUser] = useState<string>('')
 
-function HandleSubmit(e: FormEvent) {
+async function HandleSubmit(e: FormEvent) {
   e.preventDefault()
-  fetchPokemonBySearch('ditto')
-  console.log(searchByUser, "searrchhh")
+
+  if(!searchByUser) {
+    fetchData()
+  } else {
+    try {
+      const data = await fetchPokemonBySearch(searchByUser);
+      setPokemons([data]);
+    } catch (error) {
+      console.error("Erro ao buscar os pokémons:", error);
+    }
+    
+  }
+  
 }
+
+console.log(pokemons, "searchhh")
 
   return (
     <StyledContainerBody>

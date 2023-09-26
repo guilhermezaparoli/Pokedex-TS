@@ -126,16 +126,9 @@ export async function fetchPokemonByType(typeName: string) {
   return payloadPokemonType;
 }
 
-export async function fetchPokemonBySearch(pokemonName: string) {
-  console.log(pokemonName, "searchhh");
-  const response = await api.get(`/pokemon/ditto`);
-
-
-  console.log(response.data, "searchhh resp");
-
-
+export async function fetchPokemonBySearch(pokemonName: string){
+  const response = await api.get(`/pokemon/${pokemonName}`);
   const { id, types, height, weight, stats } = response.data
-
 
   for (const name of stats) {
     switch (name.stat.name) {
@@ -167,6 +160,8 @@ export async function fetchPokemonBySearch(pokemonName: string) {
     weight,
     stats,
   };
-  console.log(payloadPokemonSearch, 'searchhh')
+
+  return payloadPokemonSearch
+
 
 }
