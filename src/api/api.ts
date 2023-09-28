@@ -20,8 +20,8 @@ export const api = axios.create({
   baseURL: "https://pokeapi.co/api/v2/",
 });
 
-export async function getAllPokemons() {
-  const response = await api.get("/pokemon?offset=0&limit=9");
+export async function getAllPokemons(numberLimit: number) {
+  const response = await api.get(`/pokemon?offset=0&limit=${numberLimit}`);
   const { results } = response.data;
 
   const payloadPokemons = await Promise.all(
@@ -78,7 +78,7 @@ async function getMoreInfo(url: string): Promise<Request> {
 // }
 
 export async function fetchPokemonByType(typeName: string) {
-  const response = await api.get(`/type/${typeName}?offset=0&limit=9`);
+  const response = await api.get(`/type/${typeName}`);
   const { pokemon } = response.data;
 
   console.log(pokemon);

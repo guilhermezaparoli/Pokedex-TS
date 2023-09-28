@@ -1,16 +1,23 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
+import GifPikachuCrying from "../../../assets/gif/pikachu-crying.gif"
+
 import { CardPokemon } from "../../CardPokemon";
 import {
   ButtonSearch,
   ContainerCards,
   ContainerDivider,
+  ContainerGif,
   DividerLeft,
   DividerRight,
   InputSearch,
   InputSearchContainer,
+  LoadMore,
+  PokemonLoader,
+  PokemonNotFound,
   SearchContainer,
   StyledContainerBody,
+  StyledLoader,
   StyledPokeballIcon,
   TypeSearch,
   Types,
@@ -46,7 +53,8 @@ export interface Pokemon {
 
 export function Body() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchByUser, setSearchByUser] = useState<string>("");
   const [isSelected, setIsSelected] = useState([
     false,
     false,
@@ -67,7 +75,6 @@ export function Body() {
     false,
     false,
   ]);
-
   const types = [
     "fire",
     "flying",
@@ -88,6 +95,7 @@ export function Body() {
     "steel",
     "water",
   ];
+  const [numberPokemonToShow, setNumberPokemonToShow] = useState<number>(9);
 
   function handleCardTypeClick(index: number) {
     const newSelected = isSelected.map((_, i) => i === index);
@@ -97,20 +105,32 @@ export function Body() {
     if (isSelected[index] === true) {
       const newSelected = [...isSelected];
       newSelected[index] = false;
-      fetchData()
-
+      fetchData();
 
       setIsSelected(newSelected);
     }
   }
 
+  function resetCardTypeClicked() {
+    const newArr = isSelected.map((item) => {
+      if (item) {
+        return (item = false);
+      } else {
+        return (item = false);
+      }
+    });
+    setIsSelected(newArr);
+  }
 
   async function fetchData() {
+    setLoading(true);
     try {
-      const data = await getAllPokemons();
+      const data = await getAllPokemons(numberPokemonToShow);
       setPokemons(data);
     } catch (error) {
       console.error("Erro ao buscar os pokémons:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -119,37 +139,60 @@ export function Body() {
   }, []);
 
   async function HandleFetchByType(type: string) {
-    setPokemons(await fetchPokemonByType(type));
-  }
-
-  const [searchByUser, setSearchByUser] = useState<string>('')
-
-async function HandleSubmit(e: FormEvent) {
-  e.preventDefault()
-
-  if(!searchByUser) {
-    fetchData()
-  } else {
+    setLoading(true);
     try {
-      const data = await fetchPokemonBySearch(searchByUser);
-      setPokemons([data]);
-    } catch (error) {
-      console.error("Erro ao buscar os pokémons:", error);
+      const response = await fetchPokemonByType(type);
+      setPokemons(response);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
     }
-    
   }
-  
-}
 
-console.log(pokemons, "searchhh")
+  const [pokemonNotFound, setPokemonNotFound] = useState<boolean>(false)
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    resetCardTypeClicked();
+    if (searchByUser.length <= 0) {
+      fetchData();
+    } else {
+      setLoading(true);
+      try {
+        const data = await fetchPokemonBySearch(searchByUser);
+        setPokemons([data]);
+        setPokemonNotFound(false)
+      } catch (error) {
+        setPokemonNotFound(true)
+        console.error("Erro ao buscar os pokémons:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [numberPokemonToShow]);
+
+  console.log(numberPokemonToShow);
+  function increaseNumberPokemonToShow() {
+    setNumberPokemonToShow((state) => state + 9);
+    console.log(numberPokemonToShow, "entrouu");
+  }
 
   return (
     <StyledContainerBody>
       <SearchContainer>
         <InputSearchContainer>
-          <form action="" onSubmit={(e) => HandleSubmit(e)}>
-            <InputSearch type="text" placeholder="Search your pokémon" onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchByUser(e.target.value)} />
-            <ButtonSearch>
+          <form action="" onSubmit={(e) => handleSubmit(e)}>
+            <InputSearch
+              type="text"
+              placeholder="Search your pokémon"
+              onChange={(e) => setSearchByUser(e.target.value)}
+            />
+            <ButtonSearch type="submit">
               <img src={IconSearch} alt="icone de lupa" />
             </ButtonSearch>
           </form>
@@ -160,6 +203,7 @@ console.log(pokemons, "searchhh")
             {types.map((type, index) => {
               return (
                 <CardType
+                  key={index}
                   value={type}
                   isSelected={isSelected[index]}
                   onClick={() => {
@@ -178,12 +222,26 @@ console.log(pokemons, "searchhh")
         <StyledPokeballIcon src={PokeballIcon} alt="" />
         <DividerRight />
       </ContainerDivider>
+      {loading && !pokemonNotFound ? (
+        <StyledLoader style={{ display: "flex", justifyContent: "center" }}>
+          <span className="loader" />{" "}
+        </StyledLoader>
+      ) : !loading && !pokemonNotFound ? (
+        <ContainerCards>
+          {pokemons.map((pokemon) => (
+            <CardPokemon pokemonData={pokemon} />
+          ))}
+        </ContainerCards>
+      ) : <PokemonNotFound>
+       
+          <ContainerGif>
+          <img src={GifPikachuCrying} alt="" />
 
-      <ContainerCards>
-        {pokemons.map((pokemon) => (
-          <CardPokemon pokemonData={pokemon} />
-        ))}
-      </ContainerCards>
+          </ContainerGif>
+          <p>Sorry, pokemon not found!</p>
+          
+      </PokemonNotFound> }
+      <LoadMore onClick={increaseNumberPokemonToShow}>Load more</LoadMore>
     </StyledContainerBody>
   );
 }
