@@ -22,16 +22,20 @@ import BoltIcon from "../../assets/icon-bolt.svg";
 import { Pokemon } from "../Layout/Body";
 import axios from "axios";
 import { ModalPokemon } from "../ModalPokemon";
+import { useState } from "react";
 
 interface CardPokemonProps {
   pokemonData: Pokemon;
   modal?: boolean;
 }
-
+ 
 export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
   function formatedId(id: number) {
     return String(id).padStart(3, "0");
   }
+
 
   async function initFunction() {
     try {
@@ -88,25 +92,34 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
         </Features>
 
         {modal || (
+          <>
+          <MoreDetails color={pokemonData.types[0].type.name} onClick={() => setIsOpen(true)}>
+          <IconTextContainer>
+            <img src={BoltIcon} alt="" />
+            <p>More Details</p>
+          </IconTextContainer>
+        </MoreDetails>
           <StyledPopup
-            trigger={
-              <MoreDetails color={pokemonData.types[0].type.name}>
-                <IconTextContainer>
-                  <img src={BoltIcon} alt="" />
-                  <p>More Details</p>
-                </IconTextContainer>
-              </MoreDetails>
-            }
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            
+     
+              
+           
             modal
             nested
             lockScroll      
           >
-            {(close) => (
               <Dialog >
-                <ModalPokemon pokemonData={pokemonData} close={close} />
+                <ModalPokemon pokemonData={pokemonData} close={() => {
+                  setIsOpen(false);
+                  console.log(isOpen)
+                }} />
               </Dialog>
-            )}
+
           </StyledPopup>
+          </>
+
         )}
       </Card>
     </StyledMainContainer>

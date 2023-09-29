@@ -24,7 +24,10 @@ export function ModalPokemon({ pokemonData, close }: ModalPokemonProps) {
   return (
     <>
       <ContainerModalPokemon>
-        <CloseIcon onClick={close}/>
+        <CloseIcon onClick={() => {
+          close();
+          console.log("aqui")
+        }}/>
         <CardPokemon pokemonData={pokemonData} modal />
         <ContainerDivider>
           <Divider />
