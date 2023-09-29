@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-import GifPikachuCrying from "../../../assets/gif/pikachu-crying.gif"
+import GifPikachuCrying from "../../../assets/gif/pikachu-crying.gif";
 
 import { CardPokemon } from "../../CardPokemon";
 import {
@@ -13,12 +13,14 @@ import {
   InputSearch,
   InputSearchContainer,
   LoadMore,
+  MainContainerCards,
   PokemonLoader,
   PokemonNotFound,
   SearchContainer,
   StyledContainerBody,
   StyledLoader,
   StyledPokeballIcon,
+  TextPokemonNotFound,
   TypeSearch,
   Types,
 } from "./styles";
@@ -95,7 +97,8 @@ export function Body() {
     "steel",
     "water",
   ];
-  const [numberPokemonToShow, setNumberPokemonToShow] = useState<number>(9);
+  const [numberPokemonToShowOffset, setNumberPokemonToShowOffset] =
+    useState<number>(0);
 
   function handleCardTypeClick(index: number) {
     const newSelected = isSelected.map((_, i) => i === index);
@@ -123,10 +126,11 @@ export function Body() {
   }
 
   async function fetchData() {
-    setLoading(true);
+    // setLoading(true);
     try {
-      const data = await getAllPokemons(numberPokemonToShow);
-      setPokemons(data);
+      const data = await getAllPokemons(numberPokemonToShowOffset);
+      const loadPokemons = [...pokemons, ...data];
+      setPokemons(loadPokemons);
     } catch (error) {
       console.error("Erro ao buscar os pokémons:", error);
     } finally {
@@ -150,7 +154,7 @@ export function Body() {
     }
   }
 
-  const [pokemonNotFound, setPokemonNotFound] = useState<boolean>(false)
+  const [pokemonNotFound, setPokemonNotFound] = useState<boolean>(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -162,9 +166,9 @@ export function Body() {
       try {
         const data = await fetchPokemonBySearch(searchByUser);
         setPokemons([data]);
-        setPokemonNotFound(false)
+        setPokemonNotFound(false);
       } catch (error) {
-        setPokemonNotFound(true)
+        setPokemonNotFound(true);
         console.error("Erro ao buscar os pokémons:", error);
       } finally {
         setLoading(false);
@@ -174,12 +178,10 @@ export function Body() {
 
   useEffect(() => {
     fetchData();
-  }, [numberPokemonToShow]);
+  }, [numberPokemonToShowOffset]);
 
-  console.log(numberPokemonToShow);
   function increaseNumberPokemonToShow() {
-    setNumberPokemonToShow((state) => state + 9);
-    console.log(numberPokemonToShow, "entrouu");
+    setNumberPokemonToShowOffset((state) => state + 9);
   }
 
   return (
@@ -227,21 +229,24 @@ export function Body() {
           <span className="loader" />{" "}
         </StyledLoader>
       ) : !loading && !pokemonNotFound ? (
+        <MainContainerCards>
+
         <ContainerCards>
           {pokemons.map((pokemon) => (
             <CardPokemon pokemonData={pokemon} />
           ))}
-        </ContainerCards>
-      ) : <PokemonNotFound>
-       
-          <ContainerGif>
-          <img src={GifPikachuCrying} alt="" />
 
+        </ContainerCards>
+            <LoadMore onClick={increaseNumberPokemonToShow}>Load more</LoadMore>
+          </MainContainerCards>
+      ) : (
+        <PokemonNotFound>
+          <ContainerGif>
+            <img src={GifPikachuCrying} alt="" />
           </ContainerGif>
-          <p>Sorry, pokemon not found!</p>
-          
-      </PokemonNotFound> }
-      <LoadMore onClick={increaseNumberPokemonToShow}>Load more</LoadMore>
+          <TextPokemonNotFound>Sorry, pokemon not found!</TextPokemonNotFound>
+        </PokemonNotFound>
+      )}
     </StyledContainerBody>
   );
 }

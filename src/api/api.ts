@@ -20,10 +20,9 @@ export const api = axios.create({
   baseURL: "https://pokeapi.co/api/v2/",
 });
 
-export async function getAllPokemons(numberLimit: number) {
-  const response = await api.get(`/pokemon?offset=0&limit=${numberLimit}`);
+export async function getAllPokemons(offset: number) {
+  const response = await api.get(`/pokemon?offset=${offset}&limit=9`);
   const { results } = response.data;
-
   const payloadPokemons = await Promise.all(
     results.map(async (pokemon: Pokemon) => {
       const { id, types, height, weight, stats } = await getMoreInfo(

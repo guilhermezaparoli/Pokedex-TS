@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
 
 export const StyledContainerBody = styled.main`
+
+padding-bottom: 8rem;
+
   .loader {
     width: 48px;
     height: 48px;
@@ -164,6 +167,11 @@ export const StyledPokeballIcon = styled.img`
   margin: 0px 1.5rem;
 `;
 
+export const MainContainerCards = styled.div`
+display: flex;
+flex-direction: column;
+`
+
 export const ContainerCards = styled.div`
   max-width: 76rem;
   display: grid;
@@ -171,10 +179,37 @@ export const ContainerCards = styled.div`
   gap: 13.5rem 3rem;
   justify-items: center;
 
-  margin: 0 auto;
+  margin: 0 auto 8rem;
+
 `;
 
-export const LoadMore = styled.button``;
+export const LoadMore = styled.button`
+/* display: flex;
+flex: 1;
+justify-content: center; */
+
+
+padding: 12px;
+border-radius: 8px;
+
+border: 1px solid ${props => props.theme["pokemon-card-border"]};
+
+
+color: ${props => props.theme.white};
+font-family: "Montserrat", sans-serif;
+font-weight: 700;
+line-height: 1.5;
+
+color: ${props => props.theme.white};
+background: linear-gradient(180deg, #151A37 0%, rgba(21, 26, 55, 0.00) 100%);
+
+transition: 0.3s;
+
+&:hover {
+  filter: brightness(0.7);
+}
+`;
+
 
 export const PokemonNotFound = styled.div`
   display: flex;
@@ -191,3 +226,11 @@ export const ContainerGif = styled.div`
     height: 100px;
   }
 `;
+
+
+export const TextPokemonNotFound = styled.p`
+color: ${props => props.theme.white};
+font-family: "Montserrat", sans-serif;
+font-weight: 700;
+line-height: 1.5;
+`
