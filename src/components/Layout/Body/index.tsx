@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import GifPikachuCrying from "../../../assets/gif/pikachu-crying.gif";
 
@@ -14,7 +14,6 @@ import {
   InputSearchContainer,
   LoadMore,
   MainContainerCards,
-  PokemonLoader,
   PokemonNotFound,
   SearchContainer,
   StyledContainerBody,
@@ -41,13 +40,13 @@ export interface PokemonType {
 
 export interface Pokemon {
   name: string;
-  url: string;
+  url?: string;
   id: number;
   height: number;
   weight: number;
   types: PokemonType[];
   stats: StatsInterface[];
-  pokemon: {
+  pokemon?: {
     name: string;
     url: string;
   };
@@ -108,6 +107,7 @@ export function Body() {
     if (isSelected[index] === true) {
       const newSelected = [...isSelected];
       newSelected[index] = false;
+      setPokemons([])
       fetchData();
 
       setIsSelected(newSelected);
@@ -160,7 +160,10 @@ export function Body() {
     e.preventDefault();
     resetCardTypeClicked();
     if (searchByUser.length <= 0) {
+      setPokemons([])
+      console.log(pokemons)
       fetchData();
+      console.log("entrou")
     } else {
       setLoading(true);
       try {
@@ -175,6 +178,10 @@ export function Body() {
       }
     }
   }
+  useEffect(() => {
+    console.log(pokemons);
+  }, [pokemons]);
+
 
   useEffect(() => {
     fetchData();
@@ -229,16 +236,19 @@ export function Body() {
           <span className="loader" />{" "}
         </StyledLoader>
       ) : !loading && !pokemonNotFound ? (
-        <MainContainerCards>
-
+        
+        <>
         <ContainerCards>
           {pokemons.map((pokemon) => (
             <CardPokemon pokemonData={pokemon} />
           ))}
 
         </ContainerCards>
+
+        <MainContainerCards>
             <LoadMore onClick={increaseNumberPokemonToShow}>Load more</LoadMore>
-          </MainContainerCards>
+        </MainContainerCards>
+          </>
       ) : (
         <PokemonNotFound>
           <ContainerGif>

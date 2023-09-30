@@ -20,7 +20,7 @@ import HeightIcon from "../../assets/icon-ruler.svg";
 import BoltIcon from "../../assets/icon-bolt.svg";
 
 import { Pokemon } from "../Layout/Body";
-import axios from "axios";
+
 import { ModalPokemon } from "../ModalPokemon";
 import { useState } from "react";
 
@@ -37,18 +37,18 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
   }
 
 
-  async function initFunction() {
-    try {
-      await axios.get(
-        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`
-      );
-      console.log("tem imagem");
-    } catch (error) {
-      console.log("não tem imagem");
-    }
-  }
+  // async function initFunction() {
+  //   try {
+  //     await axios.get(
+  //       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`
+  //     );
+  //     console.log("tem imagem");
+  //   } catch (error) {
+  //     console.log("não tem imagem");
+  //   }
+  // }
 
-  initFunction();
+  // initFunction();
 
   return (
     <StyledMainContainer>
@@ -113,7 +113,6 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
               <Dialog >
                 <ModalPokemon pokemonData={pokemonData} close={() => {
                   setIsOpen(false);
-                  console.log(isOpen)
                 }} />
               </Dialog>
 

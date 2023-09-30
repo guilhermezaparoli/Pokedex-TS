@@ -15,7 +15,7 @@ export function Footer() {
       <ContainerFooter>
         <FooterContent>
           <Copyright>
-            <p>Image rights to Nintendo & The Pokémon Company</p>
+            <p>Copyright to Nintendo & The Pokémon Company</p>
             <p>Data provided by API - pokeapi.co</p>
           </Copyright>
           <Medias>

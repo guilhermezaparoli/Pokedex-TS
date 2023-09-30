@@ -19,7 +19,6 @@ psychic: 'type-psychic',
 rock: 'type-rock',
 ground: 'type-ground',
 steel: 'type-steel',
-all: 'type-all'
 } as const
 
 export interface StatusProps {

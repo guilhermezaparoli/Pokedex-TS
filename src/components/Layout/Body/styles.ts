@@ -170,6 +170,8 @@ export const StyledPokeballIcon = styled.img`
 export const MainContainerCards = styled.div`
 display: flex;
 flex-direction: column;
+align-items: center;
+justify-content: center;
 `
 
 export const ContainerCards = styled.div`
@@ -184,9 +186,7 @@ export const ContainerCards = styled.div`
 `;
 
 export const LoadMore = styled.button`
-/* display: flex;
-flex: 1;
-justify-content: center; */
+width: 200px;
 
 
 padding: 12px;
