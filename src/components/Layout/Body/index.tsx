@@ -118,6 +118,7 @@ export function Body() {
     }
   }
 
+
   function resetCardTypeClicked() {
     const newArr = isSelected.map((item) => {
       if (item) {
@@ -132,10 +133,10 @@ export function Body() {
   async function fetchData() {
 
     // setLoading(true);
-
+console.log(searchByUser, "useerr")
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
-      if(searchByUser.length > 0 || numberPokemonToShowOffset !== 0){
+      if(searchByUser.length || numberPokemonToShowOffset !== 0){
         const loadPokemons = [...pokemons, ...data];
         setPokemons(loadPokemons);
       } else {
@@ -152,10 +153,6 @@ export function Body() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-console.log(pokemons, "useEffect")
-  }, [pokemons])
 
   async function HandleFetchByType(type: string) {
     setLoading(true);
@@ -213,7 +210,8 @@ console.log(pokemons, "useEffect")
             <InputSearch
               type="text"
               placeholder="Search your pokémon"
-              onChange={(e) => setSearchByUser(e.target.value)}
+              onChange={(e) => setSearchByUser(e.target.value.toLowerCase())}
+              value={searchByUser}
             />
             <ButtonSearch type="submit">
               <img src={IconSearch} alt="icone de lupa" />
@@ -232,6 +230,7 @@ console.log(pokemons, "useEffect")
                   onClick={() => {
                     handleCardTypeClick(index);
                     !isSelected[index] && HandleFetchByType(type);
+                    setSearchByUser("")
                   }}
                 />
               );
