@@ -35,12 +35,27 @@ import PokeballIcon from "../../../assets/pokeball-icon-colored.svg";
 import { STATUS_COLORS } from "../../CardType/styles";
 export interface PokemonType {
   type: {
-    name: "bug" |"dark"|"electric"| "fairy"| "fighting"| "dragon"|
-    "fire"| "flying"| "ghost"| "grass"| "ground"| "ice"|
-    "normal"| "poison"| "psychic"| "rock"| "steel"| "water";
+    name:
+      | "bug"
+      | "dark"
+      | "electric"
+      | "fairy"
+      | "fighting"
+      | "dragon"
+      | "fire"
+      | "flying"
+      | "ghost"
+      | "grass"
+      | "ground"
+      | "ice"
+      | "normal"
+      | "poison"
+      | "psychic"
+      | "rock"
+      | "steel"
+      | "water";
   };
 }
-
 
 export interface Pokemon {
   name: string;
@@ -111,13 +126,12 @@ export function Body() {
     if (isSelected[index] === true) {
       const newSelected = [...isSelected];
       newSelected[index] = false;
-      setPokemons([])
+      setPokemons([]);
       fetchData();
 
       setIsSelected(newSelected);
     }
   }
-
 
   function resetCardTypeClicked() {
     const newArr = isSelected.map((item) => {
@@ -131,16 +145,15 @@ export function Body() {
   }
 
   async function fetchData() {
-
     // setLoading(true);
-console.log(searchByUser, "useerr")
+    console.log(searchByUser, "useerr");
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
-      if(searchByUser.length || numberPokemonToShowOffset !== 0){
+      if (searchByUser.length || numberPokemonToShowOffset !== 0) {
         const loadPokemons = [...pokemons, ...data];
         setPokemons(loadPokemons);
       } else {
-        const loadPokemons = [...data]
+        const loadPokemons = [...data];
         setPokemons(loadPokemons);
       }
     } catch (error) {
@@ -173,15 +186,15 @@ console.log(searchByUser, "useerr")
     e.preventDefault();
     resetCardTypeClicked();
     setPokemonNotFound(false);
-    setNumberPokemonToShowOffset(0)
+    setNumberPokemonToShowOffset(0);
     if (searchByUser.length <= 0) {
-      setPokemons([])
+      setPokemons([]);
       fetchData();
     } else {
       setLoading(true);
       try {
         const data = await fetchPokemonBySearch(searchByUser);
-        console.log(data, "data")
+        console.log(data, "data");
         setPokemons([data]);
         setPokemonNotFound(false);
       } catch (error) {
@@ -192,7 +205,6 @@ console.log(searchByUser, "useerr")
       }
     }
   }
-
 
   useEffect(() => {
     fetchData();
@@ -230,7 +242,7 @@ console.log(searchByUser, "useerr")
                   onClick={() => {
                     handleCardTypeClick(index);
                     !isSelected[index] && HandleFetchByType(type);
-                    setSearchByUser("")
+                    setSearchByUser("");
                   }}
                 />
               );
@@ -249,19 +261,21 @@ console.log(searchByUser, "useerr")
           <span className="loader" />{" "}
         </StyledLoader>
       ) : !loading && !pokemonNotFound ? (
-        
         <>
-        <ContainerCards>
-          {pokemons.map((pokemon) => (
-            <CardPokemon pokemonData={pokemon} />
-          ))}
-
-        </ContainerCards>
-
-        <MainContainerCards>
-            <LoadMore onClick={increaseNumberPokemonToShow}>Load more</LoadMore>
-        </MainContainerCards>
-          </>
+          <ContainerCards>
+            {pokemons.map((pokemon) => (
+              <CardPokemon pokemonData={pokemon} />
+            ))}
+          </ContainerCards>
+{console.log(pokemons.length)}
+          {pokemons.length === 1 || (
+            <MainContainerCards>
+              <LoadMore onClick={increaseNumberPokemonToShow}>
+                Load more
+              </LoadMore>
+            </MainContainerCards>
+          )}
+        </>
       ) : (
         <PokemonNotFound>
           <ContainerGif>
