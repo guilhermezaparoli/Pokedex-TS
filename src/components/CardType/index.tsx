@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { STATUS_COLORS, StyledContainer } from "./styles";
+import { CSSProperties, FC } from "react";
+import {StyledContainer } from "./styles";
 import {ReactComponent as IconTypeBug} from "../../assets/pokemonTypes/bug.svg"
 import {ReactComponent as IconTypeDark} from "../../assets/pokemonTypes/dark.svg"
 import {ReactComponent as IconTypeDragon} from "../../assets/pokemonTypes/dragon.svg"
@@ -18,17 +18,19 @@ import {ReactComponent as IconTypePsychic} from "../../assets/pokemonTypes/psych
 import {ReactComponent as IconTypeRock} from "../../assets/pokemonTypes/rock.svg"
 import {ReactComponent as IconTypeSteel} from "../../assets/pokemonTypes/steel.svg"
 import {ReactComponent as IconTypeWater} from "../../assets/pokemonTypes/water.svg"
-interface CardTypeProps {
-  value: keyof typeof STATUS_COLORS;
+export interface CardTypeProps {
+  value: "bug" |"dark"|"electric"| "fairy"| "fighting"| "dragon"|
+  "fire"| "flying"| "ghost"| "grass"| "ground"| "ice"|
+  "normal"| "poison"| "psychic"| "rock"| "steel"| "water";
   isSelected: boolean
-  onClick: () => void
+  onClick?: () => void
+  style?: CSSProperties
 }
 
 
-export function CardType({ value, onClick, isSelected}: CardTypeProps) {
+export function CardType({ value, onClick, isSelected, style}: CardTypeProps) {
   let TypeSvgComponent: FC<React.SVGProps<SVGSVGElement>> | undefined;
 
-  
   switch (value) {
   case "bug":
     TypeSvgComponent = IconTypeBug;
@@ -87,8 +89,9 @@ export function CardType({ value, onClick, isSelected}: CardTypeProps) {
 }
 
 
+
   return (
-    <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} >
+    <StyledContainer statusColor={value} onClick={onClick} isSelected={isSelected} style={style} >
       {TypeSvgComponent && <TypeSvgComponent/>}
       <p>{value}</p>
     </StyledContainer>

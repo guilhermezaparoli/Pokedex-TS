@@ -29,6 +29,9 @@ export const GlobalStyle = createGlobalStyle`
       border-radius: .5rem;       
       border: 0.25rem solid #060B28;  
     }
+    
+
+
   }
 
   ul {

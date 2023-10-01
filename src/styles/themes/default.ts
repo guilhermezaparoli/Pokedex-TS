@@ -24,5 +24,6 @@ export const defaultTheme = {
 
   "input-color": "#2F5AFF",
   "place-holder-color": "rgba(255, 255, 255, 0.25)",
-  "pokemnon-card-border": "#24293F",
+  "pokemon-card-border": "#24293F",
+  "container-modal": '#555',
 };

@@ -22,13 +22,14 @@ steel: 'type-steel',
 } as const
 
 export interface StatusProps {
-  statusColor: keyof typeof STATUS_COLORS,
+  statusColor: "bug" |"dark"|"electric"| "fairy"| "fighting"| "dragon"|
+  "fire"| "flying"| "ghost"| "grass"| "ground"| "ice"|
+  "normal"| "poison"| "psychic"| "rock"| "steel"| "water";
   isSelected: boolean
 }
 
 export const StyledContainer = styled.button<StatusProps>`
-/* background-color: ${props => props.isSelected ? props.theme[STATUS_COLORS[props.statusColor]]  : `#060F39`}; */
-background-color: ${props => props.theme[STATUS_COLORS[props.statusColor]]};
+background-color: ${props => props.isSelected ? props.theme[`type-${props.statusColor}`]  : `#060F39`};
 
 display: flex;
 align-items: center;
@@ -40,7 +41,6 @@ border: 1px solid transparent;
 transition: 0.3s;
 
 p {
-  /* color: ${props => props.isSelected ? props.theme.white : props.theme[STATUS_COLORS[props.statusColor]]} ; */
   color: ${props => props.theme.white} ;
   font-size: 1rem;
   line-height: 1.5;
@@ -48,12 +48,13 @@ p {
   text-transform: capitalize;
 }
 
-/* svg path {
-  fill: ${props => props.isSelected ? props.theme.white : props.theme[STATUS_COLORS[props.statusColor]]} !important;
-} */
+svg path {
+transition: 0.3s;
+  fill: ${props => props.isSelected ? props.theme.white : props.theme[`type-${props.statusColor}`]};
+}
 
 &:hover {
-  border: 1px solid  ${props => props.theme[STATUS_COLORS[props.statusColor]]}
+  border: 1px solid  ${props => props.theme[`type-${props.statusColor}`]}
 
 }
 
