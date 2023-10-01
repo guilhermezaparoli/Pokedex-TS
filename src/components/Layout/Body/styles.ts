@@ -71,6 +71,7 @@ export const Types = styled.div`
     flex-wrap: nowrap;
     overflow: auto;
     justify-content: initial;
+    padding: 15px 0;
   }
 `;
 

@@ -8,6 +8,7 @@ export const ContainerModalPokemon = styled.div`
 
   border-radius: 24px;
 
+  border: 1px solid ${props => props.theme["place-holder-color"]};
   display: flex;
   align-items: center;
 
@@ -46,7 +47,6 @@ export const ContainerDivider = styled.div`
   justify-content: center;
   gap: 24px;
 
-
   margin: 0 40px;
 
   @media (max-width: 768px) {
@@ -57,12 +57,11 @@ export const ContainerDivider = styled.div`
 export const Divider = styled.div`
   width: 1px;
   height: 124px;
-
   background-color: ${(props) => props.theme["place-holder-color"]};
 
   @media (max-width: 768px) {
     height: 1px;
-    width:124px;
+    width:119px;
 
   }
 `;

@@ -18,7 +18,6 @@ export const defaultTheme = {
   'type-psychic': '#ff6c64',
   'type-rock': '#d8bc5a',
   'type-steel': '#23a1bd',
-  'type-all': 'black',
   
 
 

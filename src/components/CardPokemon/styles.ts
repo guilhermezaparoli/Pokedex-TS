@@ -1,30 +1,6 @@
 import Popup from "reactjs-popup";
 import { keyframes, styled } from "styled-components";
 
-export const STATUS_COLORS = {
-  bug: "type-bug",
-  fire: "type-fire",
-  flying: "type-flying",
-  dark: "type-dark",
-  dragon: "type-dragon",
-  electric: "type-electric",
-  grass: "type-grass",
-  poison: "type-poison",
-  water: "type-water",
-  fairy: "type-fairy",
-  fighting: "type-fighting",
-  ghost: "type-ghost",
-  ice: "type-ice",
-  normal: "type-normal",
-  psychic: "type-psychic",
-  rock: "type-rock",
-  steel: "type-steel",
-  ground: "type-ground"
-} as const;
-
-export interface StatusProps {
-  statusColor: keyof typeof STATUS_COLORS;
-}
 
 
 const fadeDown = keyframes`
@@ -72,7 +48,7 @@ export const Card = styled.div<StyledMainContainerProps>`
     display: block;
     width: 12.5rem;
     height: 12.5rem;
-    background: ${props.theme[STATUS_COLORS[props.color]]};
+    background: ${props.theme[`type-${props.color}`]};;
     filter: blur(128px);
     position: absolute;
     top: 0;
@@ -174,8 +150,8 @@ export const MoreDetails = styled.button`
   align-items: center;
   justify-content: center;
 
-  background-color: ${(props) => props.theme[STATUS_COLORS[props.color]]};
-
+  background-color: ${(props) => props.theme[`type-${props.color}`]};
+ 
   > p {
     color: ${(props) => props.theme.white};
     font-size: 1rem;
@@ -192,8 +168,6 @@ export const MoreDetails = styled.button`
 export const Dialog = styled.div`
 width: 100%;
 margin: 14rem 0 7rem;
-
-/* overflow: auto; */
 `
 
 export const StyledPopup = styled(Popup)`
@@ -201,7 +175,7 @@ export const StyledPopup = styled(Popup)`
 
 
 &-overlay {
-background: rgba(0, 0, 0, 0.50);
+background: rgba(0, 0, 0, 0.60);
 
 }
 

@@ -32,21 +32,25 @@ import {
 import { CardType } from "../../CardType";
 import IconSearch from "../../../assets/icon-search.svg";
 import PokeballIcon from "../../../assets/pokeball-icon-colored.svg";
+import { STATUS_COLORS } from "../../CardType/styles";
 export interface PokemonType {
   type: {
-    name: string;
+    name: "bug" |"dark"|"electric"| "fairy"| "fighting"| "dragon"|
+    "fire"| "flying"| "ghost"| "grass"| "ground"| "ice"|
+    "normal"| "poison"| "psychic"| "rock"| "steel"| "water";
   };
 }
 
+
 export interface Pokemon {
   name: string;
-  url?: string;
+  url: string;
   id: number;
   height: number;
   weight: number;
   types: PokemonType[];
   stats: StatsInterface[];
-  pokemon?: {
+  pokemon: {
     name: string;
     url: string;
   };
@@ -126,11 +130,18 @@ export function Body() {
   }
 
   async function fetchData() {
+
     // setLoading(true);
+
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
-      const loadPokemons = [...pokemons, ...data];
-      setPokemons(loadPokemons);
+      if(searchByUser.length > 0 || numberPokemonToShowOffset !== 0){
+        const loadPokemons = [...pokemons, ...data];
+        setPokemons(loadPokemons);
+      } else {
+        const loadPokemons = [...data]
+        setPokemons(loadPokemons);
+      }
     } catch (error) {
       console.error("Erro ao buscar os pokémons:", error);
     } finally {
@@ -142,8 +153,13 @@ export function Body() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+console.log(pokemons, "useEffect")
+  }, [pokemons])
+
   async function HandleFetchByType(type: string) {
     setLoading(true);
+    setPokemonNotFound(false);
     try {
       const response = await fetchPokemonByType(type);
       setPokemons(response);
@@ -159,15 +175,16 @@ export function Body() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     resetCardTypeClicked();
+    setPokemonNotFound(false);
+    setNumberPokemonToShowOffset(0)
     if (searchByUser.length <= 0) {
       setPokemons([])
-      console.log(pokemons)
       fetchData();
-      console.log("entrou")
     } else {
       setLoading(true);
       try {
         const data = await fetchPokemonBySearch(searchByUser);
+        console.log(data, "data")
         setPokemons([data]);
         setPokemonNotFound(false);
       } catch (error) {
@@ -178,9 +195,6 @@ export function Body() {
       }
     }
   }
-  useEffect(() => {
-    console.log(pokemons);
-  }, [pokemons]);
 
 
   useEffect(() => {
@@ -213,7 +227,7 @@ export function Body() {
               return (
                 <CardType
                   key={index}
-                  value={type}
+                  value={type as keyof typeof STATUS_COLORS}
                   isSelected={isSelected[index]}
                   onClick={() => {
                     handleCardTypeClick(index);

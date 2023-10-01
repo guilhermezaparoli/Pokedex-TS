@@ -84,11 +84,10 @@ export async function fetchPokemonByType(typeName: string) {
 
   const payloadPokemonType = await Promise.all(
     pokemon.map(async (pokemonType: Pokemon) => {
-      console.log(pokemonType.pokemon.url);
       const { id, types, height, weight, stats } = await getMoreInfo(
         pokemonType.pokemon.url
       );
-      console.log(pokemonType);
+      console.log(pokemonType,pokemon, "aquii");
       for (const name of stats) {
         switch (name.stat.name) {
           case "hp":
@@ -113,7 +112,7 @@ export async function fetchPokemonByType(typeName: string) {
       }
 
       return {
-        name: pokemonType.pokemon.name,
+        name: pokemonType.pokemon?.name,
         id,
         types,
         height,
@@ -127,7 +126,7 @@ export async function fetchPokemonByType(typeName: string) {
 
 export async function fetchPokemonBySearch(pokemonName: string){
   const response = await api.get(`/pokemon/${pokemonName}`);
-  const { id, types, height, weight, stats } = response.data
+  const { id, types, height, weight, stats, url, pokemon } = response.data
 
   for (const name of stats) {
     switch (name.stat.name) {
@@ -158,6 +157,8 @@ export async function fetchPokemonBySearch(pokemonName: string){
     height,
     weight,
     stats,
+    url,
+    pokemon
   };
 
   return payloadPokemonSearch

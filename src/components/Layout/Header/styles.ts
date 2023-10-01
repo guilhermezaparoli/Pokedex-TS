@@ -104,16 +104,8 @@ z-index: 2;
 
 
 
-&:hover {
-  transform: scale(1.1);
 
-  
-}
-
-
-
-
-animation: diagonalAnimation 2s;
+animation: float 5s 2s ease-in-out infinite, diagonalAnimation 2s;
 
 @keyframes diagonalAnimation {
   
@@ -125,6 +117,20 @@ animation: diagonalAnimation 2s;
 		transform: translate(0,0);
 	}
   
+}
+
+transform: translateY(0px);
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 
@@ -157,9 +163,6 @@ max-width: 100%;
 
 transition: 0.3s;
 z-index: 2;
-&:hover {
-  transform: scale(1.1);
-}
 
 animation: scaleAnimation 2s;
 

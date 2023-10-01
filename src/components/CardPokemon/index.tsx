@@ -28,14 +28,13 @@ interface CardPokemonProps {
   pokemonData: Pokemon;
   modal?: boolean;
 }
- 
+
 export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   function formatedId(id: number) {
     return String(id).padStart(3, "0");
   }
-
 
   // async function initFunction() {
   //   try {
@@ -66,6 +65,7 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
           {pokemonData.types.map((item) => {
             return (
               <CardType
+                key={item.type.name}
                 value={item.type.name}
                 isSelected
                 style={{ cursor: "initial" }}
@@ -93,32 +93,32 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
 
         {modal || (
           <>
-          <MoreDetails color={pokemonData.types[0].type.name} onClick={() => setIsOpen(true)}>
-          <IconTextContainer>
-            <img src={BoltIcon} alt="" />
-            <p>More Details</p>
-          </IconTextContainer>
-        </MoreDetails>
-          <StyledPopup
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-            
-     
-              
-           
-            modal
-            nested
-            lockScroll      
-          >
-              <Dialog >
-                <ModalPokemon pokemonData={pokemonData} close={() => {
-                  setIsOpen(false);
-                }} />
+            <MoreDetails
+              color={pokemonData.types[0].type.name}
+              onClick={() => setIsOpen(true)}
+            >
+              <IconTextContainer>
+                <img src={BoltIcon} alt="" />
+                <p>More Details</p>
+              </IconTextContainer>
+            </MoreDetails>
+            <StyledPopup
+              open={isOpen}
+              onClose={() => setIsOpen(false)}
+              modal
+              nested
+              lockScroll
+            >
+              <Dialog>
+                <ModalPokemon
+                  pokemonData={pokemonData}
+                  close={() => {
+                    setIsOpen(false);
+                  }}
+                />
               </Dialog>
-
-          </StyledPopup>
+            </StyledPopup>
           </>
-
         )}
       </Card>
     </StyledMainContainer>
