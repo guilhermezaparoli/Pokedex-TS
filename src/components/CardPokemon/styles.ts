@@ -22,6 +22,7 @@ export const StyledMainContainer = styled.div<StyledMainContainerProps>`
   max-height: 23.5rem;
   animation: ${fadeDown} 0.8s;
   position: relative;
+  max-height: 600px ;
 
 
 @media (max-width: 768px) {
@@ -39,7 +40,6 @@ export const Card = styled.div<StyledMainContainerProps>`
   overflow: hidden;
   border-radius: 24px;
   position: relative;
-  
 
   padding-top: 7rem;
 
@@ -50,6 +50,8 @@ export const Card = styled.div<StyledMainContainerProps>`
     height: 12.5rem;
     background: ${props.theme[`type-${props.color}`]};;
     filter: blur(128px);
+    -webkit-backdrop-filter: blur(128px);
+    backdrop-filter: blur(128px);
     position: absolute;
     top: 0;
     left: 50%;
@@ -87,6 +89,11 @@ export const PokemonName = styled.h1`
   line-height: 1.35;
 
   margin-bottom: 12px;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 20px;
 `;
 
 export const Type = styled.div`

@@ -123,7 +123,7 @@ export function Body() {
 
     setIsSelected(newSelected);
 
-    if (isSelected[index] === true) {
+    if (isSelected[index]) {
       const newSelected = [...isSelected];
       newSelected[index] = false;
       setPokemons([]);
@@ -150,10 +150,13 @@ export function Body() {
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
       if (searchByUser.length || numberPokemonToShowOffset !== 0) {
+        console.log('entrou aqui')
         const loadPokemons = [...pokemons, ...data];
         setPokemons(loadPokemons);
       } else {
-        const loadPokemons = [...data];
+        console.log("não aqui")
+        console.log(data)
+        const loadPokemons = data;
         setPokemons(loadPokemons);
       }
     } catch (error) {
