@@ -20,17 +20,31 @@ max-width: 76rem;
 width: 100%;
 margin: 0 auto;
 
+
+@media (max-width: 768px) {
+  padding-top: 0.5rem;
+}
 `
 export const HeaderContent = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
 
+
+@media (max-width: 768px) {
+  padding: 0 0.5rem;
+}
+
 `
 
 export const Medias = styled.div`
 display: flex;
 gap: 1.5rem;
+
+
+> img {
+  cursor: pointer;
+}
 `
 
 export const ContainerHero = styled.div`
@@ -70,25 +84,28 @@ margin-top: 4.5rem;
 export const Heroes = styled.div`
 display: flex;
 justify-content: center;
+
+> div {
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  flex-direction: column-reverse;
+}
 `
 
 export const ImgBigHero = styled.img`
+
 max-width: 488px;
 max-height: 528px;
-transition: 0.3s;
+transition: transform 0.3s;
 z-index: 2;
 
 
-&:hover {
-  transform: scale(1.1);
-
-  
-}
 
 
 
-
-animation: diagonalAnimation 2s;
+animation: float 5s 2s ease-in-out infinite, diagonalAnimation 2s;
 
 @keyframes diagonalAnimation {
   
@@ -102,6 +119,27 @@ animation: diagonalAnimation 2s;
   
 }
 
+transform: translateY(0px);
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  max-height: 250px;
+  max-width: 250px;
+
+  place-self: center;
+}
 `
 
 export const ImgHero = styled.img`
@@ -111,6 +149,10 @@ max-width: 100%;
 
 transition: 0.3s;
 z-index: 2;
+
+@media (max-width: 768px) {
+  max-height: 200px;
+}
 `
 
 export const ImgSmallHero = styled.img`
@@ -121,9 +163,6 @@ max-width: 100%;
 
 transition: 0.3s;
 z-index: 2;
-&:hover {
-  transform: scale(1.1);
-}
 
 animation: scaleAnimation 2s;
 
@@ -141,6 +180,10 @@ animation: scaleAnimation 2s;
   
 }
 
+
+@media (max-width: 768px) {
+  max-height: 175px;
+}
 `
 
 export const Waves =styled.div`
@@ -191,5 +234,6 @@ margin-bottom: 8rem;
     height: 2.5rem;
     min-height: 2.5rem;
   }
+margin-bottom: 4rem;
 }
 `
