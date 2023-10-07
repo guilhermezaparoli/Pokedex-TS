@@ -147,16 +147,13 @@ export function Body() {
 
   async function fetchData() {
     setLoadMore(true)
-    console.log(searchByUser, "useerr");
+  
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
       if (searchByUser.length || numberPokemonToShowOffset !== 0) {
-        console.log('entrou aqui')
         const loadPokemons = [...pokemons, ...data];
         setPokemons(loadPokemons);
       } else {
-        console.log("não aqui")
-        console.log(data)
         const loadPokemons = data;
         setPokemons(loadPokemons);
       }
@@ -193,6 +190,7 @@ export function Body() {
     setPokemonNotFound(false);
     setNumberPokemonToShowOffset(0);
     if (searchByUser.length <= 0) {
+      console.log("entrou")
       setPokemons([]);
       fetchData();
     } else {
@@ -213,7 +211,9 @@ export function Body() {
   }
 
   useEffect(() => {
-    fetchData();
+    if(numberPokemonToShowOffset) {
+      fetchData();
+    }
   }, [numberPokemonToShowOffset]);
 
   function increaseNumberPokemonToShow() {
@@ -270,7 +270,7 @@ export function Body() {
         <>
           <ContainerCards>
             {pokemons.map((pokemon) => (
-              <CardPokemon pokemonData={pokemon} />
+              <CardPokemon key={pokemon.id} pokemonData={pokemon} />
             ))}
           </ContainerCards>
           {loadMore && (

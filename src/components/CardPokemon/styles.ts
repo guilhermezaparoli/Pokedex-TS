@@ -25,6 +25,8 @@ export const StyledMainContainer = styled.div<StyledMainContainerProps>`
   @media (max-width: 768px) {
     width: 20rem;
   }
+
+  
 `;
 
 export const Card = styled.div<StyledMainContainerProps>`
@@ -40,8 +42,15 @@ export const Card = styled.div<StyledMainContainerProps>`
   border-radius: 24px;
   position: relative;
 
-  padding-top: 7rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
 
+
+  padding-top: 7rem;
   ${(props) =>
     !props.modal &&
     `&::after {
@@ -49,14 +58,13 @@ export const Card = styled.div<StyledMainContainerProps>`
     display: block;
     width: 12.5rem;
     height: 12.5rem;
-    background: ${props.theme[`type-${props.color}`]};;
+    background: ${props.theme[`type-${props.color}`]};
     filter: blur(128px);
-    -webkit-backdrop-filter: blur(128px);
-    backdrop-filter: blur(128px);
+  
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%) translate3d(0, 0, 0);
+    transform: translateX(-50%);
     transition: 0.8s;
     z-index: -2;
   }`}
@@ -176,11 +184,14 @@ export const MoreDetails = styled.button`
 export const Dialog = styled.div`
   width: 100%;
   margin: 14rem 0 7rem;
+  background-color: ${props => props.theme["pokemon-card-border"]};
+border-radius: 24px;
 `;
 
 export const StyledPopup = styled(Popup)`
   &-overlay {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.85);
+
   }
 
   @media (max-width: 768px) {
