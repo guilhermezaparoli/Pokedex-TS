@@ -22,7 +22,8 @@ import BoltIcon from "../../assets/icon-bolt.svg";
 import { Pokemon } from "../Layout/Body";
 
 import { ModalPokemon } from "../ModalPokemon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface CardPokemonProps {
   pokemonData: Pokemon;
@@ -31,28 +32,33 @@ interface CardPokemonProps {
 
 export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [imagePokemon, setImagePokemon] = useState<string>('')
 
   function formatedId(id: number) {
     return String(id).padStart(3, "0");
   }
 
-  // async function initFunction() {
-  //   try {
-  //     await axios.get(
-  //       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`
-  //     );
-  //     console.log("tem imagem");
-  //   } catch (error) {
-  //     console.log("não tem imagem");
-  //   }
-  // }
+  async function initFunction() {
+    try {
+      await axios.get(
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`
+        );
+        setImagePokemon(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`)
+      console.log("tem imagem");
+    } catch (error) {
+      setImagePokemon('')
+      console.log("não tem imagem");
+    }
+  }
 
-  // initFunction();
+useEffect(() => {
+initFunction()
+}, [pokemonData])
 
   return (
     <StyledMainContainer>
       <PokemonImage
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`}
+        src={imagePokemon}
         alt=""
       />
       <Card color={pokemonData.types[0].type.name} modal={modal}>

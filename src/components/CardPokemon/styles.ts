@@ -1,8 +1,6 @@
 import Popup from "reactjs-popup";
 import { keyframes, styled } from "styled-components";
 
-
-
 const fadeDown = keyframes`
   from {
     opacity: 0;
@@ -14,7 +12,7 @@ const fadeDown = keyframes`
   }
   `;
 interface StyledMainContainerProps {
-  modal?: boolean
+  modal?: boolean;
 }
 
 export const StyledMainContainer = styled.div<StyledMainContainerProps>`
@@ -22,16 +20,17 @@ export const StyledMainContainer = styled.div<StyledMainContainerProps>`
   max-height: 23.5rem;
   animation: ${fadeDown} 0.8s;
   position: relative;
-  max-height: 600px ;
+  max-height: 600px;
 
-
-@media (max-width: 768px) {
-  width: 20rem;
-}
+  @media (max-width: 768px) {
+    width: 20rem;
+  }
 `;
 
 export const Card = styled.div<StyledMainContainerProps>`
-  border: 1px solid ${({theme, modal}) => modal ? "transparent" : theme["pokemon-card-border"]};
+  border: 1px solid
+    ${({ theme, modal }) =>
+      modal ? "transparent" : theme["pokemon-card-border"]};
 
   display: flex;
   flex-direction: column;
@@ -43,7 +42,9 @@ export const Card = styled.div<StyledMainContainerProps>`
 
   padding-top: 7rem;
 
-  ${props => !props.modal && `&::after {
+  ${(props) =>
+    !props.modal &&
+    `&::after {
     content: "";
     display: block;
     width: 12.5rem;
@@ -55,11 +56,10 @@ export const Card = styled.div<StyledMainContainerProps>`
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translate3d(0, 0, 0);
     transition: 0.8s;
     z-index: -2;
   }`}
-
 `;
 export const PokemonImage = styled.img`
   max-width: 16rem;
@@ -70,8 +70,6 @@ export const PokemonImage = styled.img`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-
-
 `;
 export const PokemonId = styled.p`
   color: ${(props) => props.theme.white};
@@ -93,7 +91,10 @@ export const PokemonName = styled.h1`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 20px;
+
+  text-align: center;
+  width: 100%;
+  padding: 0 40px;
 `;
 
 export const Type = styled.div`
@@ -158,7 +159,7 @@ export const MoreDetails = styled.button`
   justify-content: center;
 
   background-color: ${(props) => props.theme[`type-${props.color}`]};
- 
+
   > p {
     color: ${(props) => props.theme.white};
     font-size: 1rem;
@@ -173,23 +174,18 @@ export const MoreDetails = styled.button`
   }
 `;
 export const Dialog = styled.div`
-width: 100%;
-margin: 14rem 0 7rem;
-`
+  width: 100%;
+  margin: 14rem 0 7rem;
+`;
 
 export const StyledPopup = styled(Popup)`
+  &-overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
 
-
-
-&-overlay {
-background: rgba(0, 0, 0, 0.60);
-
-}
-
-@media (max-width: 768px) {
-  &-overlay  {
-    overflow: auto;
-  } 
-
-}
-`
+  @media (max-width: 768px) {
+    &-overlay {
+      overflow: auto;
+    }
+  }
+`;

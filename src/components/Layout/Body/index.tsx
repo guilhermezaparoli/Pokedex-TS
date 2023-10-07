@@ -74,6 +74,7 @@ export interface Pokemon {
 export function Body() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadMore, setLoadMore] = useState<boolean>(true)
   const [searchByUser, setSearchByUser] = useState<string>("");
   const [isSelected, setIsSelected] = useState([
     false,
@@ -145,7 +146,7 @@ export function Body() {
   }
 
   async function fetchData() {
-    // setLoading(true);
+    setLoadMore(true)
     console.log(searchByUser, "useerr");
     try {
       const data = await getAllPokemons(numberPokemonToShowOffset);
@@ -171,6 +172,7 @@ export function Body() {
   }, []);
 
   async function HandleFetchByType(type: string) {
+    setLoadMore(false)
     setLoading(true);
     setPokemonNotFound(false);
     try {
@@ -200,6 +202,7 @@ export function Body() {
         console.log(data, "data");
         setPokemons([data]);
         setPokemonNotFound(false);
+        setLoadMore(false)
       } catch (error) {
         setPokemonNotFound(true);
         console.error("Erro ao buscar os pokémons:", error);
@@ -270,8 +273,7 @@ export function Body() {
               <CardPokemon pokemonData={pokemon} />
             ))}
           </ContainerCards>
-{console.log(pokemons.length)}
-          {pokemons.length === 1 || (
+          {loadMore && (
             <MainContainerCards>
               <LoadMore onClick={increaseNumberPokemonToShow}>
                 Load more
