@@ -24,6 +24,7 @@ import { Pokemon } from "../Layout/Body";
 import { ModalPokemon } from "../ModalPokemon";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SkeletonLoading } from "../SkeletonLoading";
 
 interface CardPokemonProps {
   pokemonData: Pokemon;
@@ -33,12 +34,14 @@ interface CardPokemonProps {
 export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [imagePokemon, setImagePokemon] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   function formatedId(id: number) {
     return String(id).padStart(3, "0");
   }
 
   async function initFunction() {
+    setLoading(true)
     try {
       await axios.get(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`
@@ -48,6 +51,8 @@ export function CardPokemon({ pokemonData, modal = false }: CardPokemonProps) {
     } catch (error) {
       setImagePokemon('')
       console.log("não tem imagem");
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -57,10 +62,11 @@ initFunction()
 
   return (
     <StyledMainContainer>
-      <PokemonImage
+      {loading ? <SkeletonLoading  src={imagePokemon} key={pokemonData.id} /> : <PokemonImage
         src={imagePokemon}
         alt=""
-      />
+      /> }
+      
       <Card color={pokemonData.types[0].type.name} modal={modal}>
         <PokemonId>#{formatedId(pokemonData.id)}</PokemonId>
         <PokemonName>
